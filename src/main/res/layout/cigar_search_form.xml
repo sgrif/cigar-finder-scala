@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <AutoCompleteTextView
+    android:id="@+id/inputCigarName"
+    android:hint="Name of the cigar you're looking for"
+    style="@style/search_form_input"
+    android:imeOptions="flagNavigateNext"
+    android:popupBackground="@drawable/autocomplete_background"
+    />
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/search_form_separator_text"
+    >
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="5dp"
+      android:layout_weight="1"
+      android:background="@drawable/separator"
+      android:layout_gravity="center"
+      android:layout_marginTop="2sp"
+      android:layout_marginRight="8dp"/>
+
+    <TextView
+      android:text="near"
+      android:layout_gravity="center"
+      android:textColor="#FEFFBF"
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      android:layout_weight="0"
+      android:textSize="18sp"
+      style="@style/lightFont"/>
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="5dp"
+      android:layout_weight="1"
+      android:background="@drawable/separator"
+      android:layout_gravity="center"
+      android:layout_marginTop="2sp"
+      android:layout_marginLeft="8dp"/>
+  </LinearLayout>
+
+  <EditText
+    android:id="@+id/inputLocationName"
+    android:hint="Location (optional)"
+    style="@style/search_form_input"
+    android:autoText="false"
+    android:imeOptions="actionDone"
+    />
+
+  <Button
+    android:text="Find it!"
+    android:id="@+id/searchSubmit"
+    android:onClick="performSearch"
+    style="@style/search_form_button"/>
+</merge>

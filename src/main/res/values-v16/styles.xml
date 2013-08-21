@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <style name="search_form_input" parent="search_form_input_parent">
+    <item name="android:fontFamily">sans-serif-light</item>
+  </style>
+
+  <style name="lightFont">
+    <item name="android:fontFamily">sans-serif-light</item>
+  </style>
+</resources>
