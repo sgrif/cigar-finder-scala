@@ -15,6 +15,7 @@ with BackNavigation[CigarSearchFormActivity] {
 
   override def onCreate(savedInstanceState: Bundle) = {
     super.onCreate(savedInstanceState)
+    setContentView(R.layout.cigar_search_results_activity)
     if (savedInstanceState == null) {
       loadLocation
     }
@@ -25,11 +26,15 @@ with BackNavigation[CigarSearchFormActivity] {
   }
 
   def onLocationLoaded(result: Option[Location]) = result match {
-    case Some(location) => {
-      val lat = location.getLatitude
-      val lon = location.getLongitude
-      android.util.Log.d("CigarFinder", "Location loaded %f %f".format(lat, lon))
-    }
+    case Some(location) => performSearch(location)
     case None => android.util.Log.d("CigarFinder", "Location failed to load")
   }
+
+  def performSearch(location: Location) = {
+    updateTitle
+    searchResultsFragment.performSearch(cigarName, location)
+  }
+
+  def updateTitle = getActionBar.setTitle(cigarName)
+  def searchResultsFragment = getFragmentManager.findFragmentById(R.id.cigar_search_results_list).asInstanceOf[CigarSearchResultsFragment]
 }
