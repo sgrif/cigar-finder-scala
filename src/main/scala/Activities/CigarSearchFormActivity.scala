@@ -1,7 +1,7 @@
 package com.seantheprogrammer.cigar_finder_android
 
 import android.app.{Activity, LoaderManager}
-import android.content.Loader
+import android.content.{Loader, Intent}
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.view.View
@@ -20,11 +20,14 @@ with LoaderManager.LoaderCallbacks[IndexedSeq[String]] {
     val locationName = findView(TR.inputLocationName).getText.toString.trim
 
     if (!cigarName.isEmpty) {
-      android.util.Log.d("CigarFinder", "Searching for %s in %s".format(cigarName, locationName))
+      val intent = new Intent(this, classOf[CigarSearchResultsActivity])
+      intent.putExtra("cigarName", cigarName)
+      intent.putExtra("locationName", locationName)
+      startActivity(intent)
     }
   }
 
-  override def onLoaderReset(l: Loader[IndexedSeq[String]]) = null
+  override def onLoaderReset(l: Loader[IndexedSeq[String]]) = findView(TR.inputCigarName).getAdapter.asInstanceOf[ArrayAdapter[String]].clear
   override def onLoadFinished(l: Loader[IndexedSeq[String]], data: IndexedSeq[String]) = {
     val cigarInput = findView(TR.inputCigarName)
     cigarInput.setThreshold(0)

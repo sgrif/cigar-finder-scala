@@ -26,7 +26,8 @@ object General {
     AndroidMarketPublish.settings ++ Seq (
       keyalias in Android := "change-me",
       libraryDependencies += "org.scalatest" %% "scalatest" % "1.8" % "test",
-      libraryDependencies += "commons-io" % "commons-io" % "2.4"
+      libraryDependencies += "commons-io" % "commons-io" % "2.4",
+      libraryDependencies += "org.apache.commons" % "commons-lang3" % "3.1"
     )
 }
 
