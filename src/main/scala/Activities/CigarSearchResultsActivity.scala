@@ -12,6 +12,7 @@ with BackNavigation[CigarSearchFormActivity] {
 
   lazy val cigarName = WordUtils.capitalize(getIntent.getStringExtra("cigarName"))
   lazy val locationName = getIntent.getStringExtra("locationName")
+  private var location: Option[Location] = None
 
   override def onCreate(savedInstanceState: Bundle) = {
     super.onCreate(savedInstanceState)
@@ -19,6 +20,16 @@ with BackNavigation[CigarSearchFormActivity] {
     if (savedInstanceState == null) {
       loadLocation
     }
+  }
+
+  override def onSaveInstanceState(outState: Bundle) = location match {
+    case Some(location) => outState.putParcelable("location", location)
+    case None => //Do nothing
+  }
+
+  override def onRestoreInstanceState(state: Bundle) = state.getParcelable[Location]("location") match {
+    case location: Location => performSearch(location)
+    case _ => // Do nothing
   }
 
   def loadLocation = {
@@ -31,6 +42,7 @@ with BackNavigation[CigarSearchFormActivity] {
   }
 
   def performSearch(location: Location) = {
+    this.location = Some(location)
     updateTitle
     searchResultsFragment.performSearch(cigarName, location)
   }
