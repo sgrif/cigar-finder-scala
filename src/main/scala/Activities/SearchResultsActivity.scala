@@ -8,9 +8,8 @@ import org.apache.commons.lang3.text.WordUtils
 
 class SearchResultsActivity extends Activity
 with TypedActivity
+with SearchResultsFragment.Callbacks
 with BackNavigation[SearchFormActivity] {
-  override def parentActivity = classOf[SearchFormActivity]
-
   lazy val cigarName = WordUtils.capitalize(getIntent.getStringExtra("cigarName"))
   lazy val locationName = getIntent.getStringExtra("locationName")
   private var location: Option[Location] = None
@@ -32,6 +31,13 @@ with BackNavigation[SearchFormActivity] {
   override def onRestoreInstanceState(state: Bundle) = state.getParcelable[Location]("location") match {
     case location: Location => performSearch(location)
     case _ => // Do nothing
+  }
+
+  override def onSearchResultClicked(results: SearchResults, id: Int) = {
+    val intent = new Intent(this, classOf[SearchResultsDetailActivity])
+    intent.putExtra("searchResults", results)
+    intent.putExtra("tappedId", id)
+    startActivity(intent)
   }
 
   def loadLocation = {
