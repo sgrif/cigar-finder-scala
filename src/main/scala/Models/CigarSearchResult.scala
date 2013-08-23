@@ -7,4 +7,7 @@ class CigarSearchResult(val cigar: String, val store: CigarStore, val carried: O
   }
 
   def hasInformation = !carried.isEmpty
+
+  def storeName = store.name
+  def storeId = store.id
 }

@@ -7,4 +7,5 @@ abstract class ListItem[T](val data: T) {
   def layoutId: Int
   def viewType: Int
   def isEnabled = true
+  def id = -1
 }

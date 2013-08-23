@@ -8,7 +8,7 @@ class CigarSearchResultListItem(result: CigarSearchResult) extends ListItem[Ciga
   override def convertView(view: View) = {
     val titleView = view.findView(TR.title)
     titleView.setLines(1)
-    titleView.setText(result.store.name)
+    titleView.setText(result.storeName)
 
     val subtitle = view.findView(TR.subtitle)
     result.hasInformation match {
@@ -26,6 +26,8 @@ class CigarSearchResultListItem(result: CigarSearchResult) extends ListItem[Ciga
   }
 
   override def viewType = 1
+
+  override def id = result.storeId
 
   def lastUpdated = "just now"
 }
