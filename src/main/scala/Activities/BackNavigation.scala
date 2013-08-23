@@ -21,5 +21,5 @@ trait BackNavigation[T] extends Activity {
     case _ => super.onOptionsItemSelected(item)
   }
 
-  def parentActivity[T](implicit m: Manifest[T]) = m.erasure.asInstanceOf[Class[T]]
+  def parentActivity: Class[T]
 }

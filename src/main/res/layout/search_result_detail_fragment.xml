@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--suppress AndroidLintUselessParent -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_height="match_parent"
+  android:layout_width="match_parent"
+  android:padding="16dp"
+  >
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/detail_bg"
+    >
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:paddingLeft="18dp"
+      android:paddingRight="18dp"
+      android:paddingTop="10dp"
+      android:paddingBottom="18dp"
+      >
+      <TextView
+        android:id="@+id/store_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="Store Name"
+        android:textColor="#95312E"
+        android:maxLines="1"
+        android:ellipsize="end"
+        />
+      <TextView
+        android:id="@+id/store_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textSize="13sp"
+        android:text="Store address"
+        android:textColor="#46382B"/>
+    </LinearLayout>
+
+    <View
+      android:layout_height="1px"
+      android:layout_width="match_parent"
+      android:background="@color/divider_color" />
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+
+      <Button
+        android:id="@+id/store_map_button"
+        android:text="@string/map"
+        android:drawableTop="@drawable/ic_action_map"
+        style="@style/search_result_detail_button"
+        />
+      <View style="@style/vertical_divider"/>
+      <Button
+        android:id="@+id/store_directions_button"
+        android:text="@string/directions"
+        android:drawableTop="@drawable/ic_action_directions"
+        style="@style/search_result_detail_button"
+        />
+      <View style="@style/vertical_divider"/>
+      <Button
+        android:id="@+id/store_call_button"
+        android:text="@string/call"
+        android:drawableTop="@drawable/ic_action_phone_start"
+        style="@style/search_result_detail_button"
+        />
+    </LinearLayout>
+    <RelativeLayout
+      android:layout_height="match_parent"
+      android:layout_width="match_parent"
+      >
+      <com.seantheprogrammer.cigar_finder_android.StaticMapView
+        android:id="@+id/static_map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="4dp"/>
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:minHeight="64dp">
+        <TextView
+          android:id="@+id/last_reported"
+          android:layout_height="match_parent"
+          android:layout_width="match_parent"
+          android:padding="8dp"
+          android:textColor="#A6F6F4F3"
+          android:background="#CC4E3C2F"
+          android:textSize="11sp"
+          android:text="Carried description"
+          android:layout_weight="1"
+          android:gravity="center"/>
+        <LinearLayout
+          android:id="@+id/last_updated_container"
+          android:layout_height="wrap_content"
+          android:layout_width="72dp"
+          android:background="#483C31"
+          android:paddingLeft="4dp"
+          android:paddingRight="6dp"
+          android:orientation="vertical"
+          android:layout_weight="0"
+          android:gravity="center"
+          android:paddingTop="8dp"
+          android:paddingBottom="8dp"
+          android:minHeight="64dp">
+          <TextView
+            android:id="@+id/last_updated_at_number"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="1"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_weight="0"
+            />
+          <TextView
+            android:id="@+id/last_updated_at_text"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="days ago"
+            android:textSize="11sp"
+            android:textAllCaps="true"
+            android:gravity="center_horizontal"
+            style="@style/lightFont"
+            />
+        </LinearLayout>
+      </LinearLayout>
+    </RelativeLayout>
+  </LinearLayout>
+</FrameLayout>

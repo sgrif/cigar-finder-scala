@@ -24,8 +24,7 @@
     <item name="android:dropDownListViewStyle">@style/autocomplete_list_style</item>
   </style>
 
-
-  <style name="cigar_search_result_detail_button" parent="android:Widget.Holo.Light.Button.Borderless.Small">
+  <style name="search_result_detail_button" parent="android:Widget.Holo.Light.Button.Borderless.Small">
     <item name="android:layout_width">fill_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_weight">1</item>

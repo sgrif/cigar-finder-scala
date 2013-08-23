@@ -10,6 +10,8 @@ class Store(
   val address: String,
   val phoneNumber: String
 ) extends Parcelable with TypedParceling {
+  def location = new ConstructedLocation(latitude, longitude)
+
   override def describeContents = 0
   override def writeToParcel(parcel: Parcel, flags: Int) = {
     parcel.write(id)

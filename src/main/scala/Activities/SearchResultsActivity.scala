@@ -10,6 +10,8 @@ class SearchResultsActivity extends Activity
 with TypedActivity
 with SearchResultsFragment.Callbacks
 with BackNavigation[SearchFormActivity] {
+  override def parentActivity = classOf[SearchFormActivity]
+
   lazy val cigarName = WordUtils.capitalize(getIntent.getStringExtra("cigarName"))
   lazy val locationName = getIntent.getStringExtra("locationName")
   private var location: Option[Location] = None
