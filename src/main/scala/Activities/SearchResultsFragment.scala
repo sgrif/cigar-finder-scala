@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.view.{LayoutInflater, View, ViewGroup}
 import android.widget.ListView
 
-class CigarSearchResultsFragment extends ListFragment {
-  import CigarSearchResultsFragment.Callbacks
+class SearchResultsFragment extends ListFragment {
+  import SearchResultsFragment.Callbacks
 
   private var callbacks: Callbacks = DummyCallbacks
 
@@ -31,12 +31,12 @@ class CigarSearchResultsFragment extends ListFragment {
 
   override def onListItemClick(lv: ListView, v: View, index: Int, id: Long) = {
     val item = adapter.getItem(index) match {
-      case result: CigarSearchResult => callbacks.onSearchResultClicked(adapter.results.sorted.toArray, id.toInt)
+      case result: SearchResult => callbacks.onSearchResultClicked(adapter.results, id.toInt)
       case _ => //Do nothing
     }
   }
 
-  def onResultsLoaded(results: Option[CigarSearchResults]) = {
+  def onResultsLoaded(results: Option[SearchResults]) = {
     adapter.results = results
     setListAdapter(results.isEmpty match {
       case false => adapter
@@ -58,14 +58,14 @@ class CigarSearchResultsFragment extends ListFragment {
   }
 
   object DummyCallbacks extends Callbacks {
-    override def onSearchResultClicked(a: Array[CigarSearchResult], i: Int) = {
+    override def onSearchResultClicked(c: SearchResults, i: Int) = {
       android.util.Log.d("CigarFinder", "Search results fragment called onSearchResultClicked on DummyCallbacks")
     }
   }
 }
 
-object CigarSearchResultsFragment {
+object SearchResultsFragment {
   trait Callbacks {
-    def onSearchResultClicked(results: Array[CigarSearchResult], id: Int): Unit
+    def onSearchResultClicked(results: SearchResults, id: Int): Unit
   }
 }

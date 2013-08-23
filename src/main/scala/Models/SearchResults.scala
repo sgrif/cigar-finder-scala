@@ -1,6 +1,6 @@
 package com.seantheprogrammer.cigar_finder_android
 
-class CigarSearchResults(results: IndexedSeq[CigarSearchResult]) {
+class SearchResults(results: IndexedSeq[SearchResult]) {
   def sorted = carried ++ notCarried ++ noInformation
 
   def carried = results.filter { _.isCarried }

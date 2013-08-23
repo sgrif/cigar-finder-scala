@@ -5,15 +5,15 @@ import android.view.{LayoutInflater, View, ViewGroup}
 import android.widget.BaseAdapter
 
 class CigarSearchResultsAdapter(context: Context) extends BaseAdapter {
-  private var _results: Option[CigarSearchResults] = None
+  private var _results: Option[SearchResults] = None
   private var _listItems: Option[IndexedSeq[ListItem[_]]] = None
 
   def results = _results match {
     case Some(results) => results
-    case None => new CigarSearchResults(IndexedSeq.empty)
+    case None => new SearchResults(IndexedSeq.empty)
   }
 
-  def results_= (results: Option[CigarSearchResults]) = {
+  def results_= (results: Option[SearchResults]) = {
     _results = results
     buildListItems
     notifyDataSetChanged
@@ -53,9 +53,9 @@ class CigarSearchResultsAdapter(context: Context) extends BaseAdapter {
     )
   }
 
-  private def itemsWithHeader(header: String, items: IndexedSeq[CigarSearchResult]) = items.isEmpty match {
+  private def itemsWithHeader(header: String, items: IndexedSeq[SearchResult]) = items.isEmpty match {
     case true => IndexedSeq.empty
-    case false => new HeaderListItem(header) +: items.map(new CigarSearchResultListItem(_))
+    case false => new HeaderListItem(header) +: items.map(new SearchResultListItem(_))
   }
 
   private def newView(index: Int, parent: ViewGroup) = layoutInflater.inflate(listItems(index).layoutId, parent, false)

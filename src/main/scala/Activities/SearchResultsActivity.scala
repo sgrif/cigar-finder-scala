@@ -1,14 +1,15 @@
 package com.seantheprogrammer.cigar_finder_android
 
 import android.app.Activity
+import android.content.Intent
 import android.location.Location
 import android.os.Bundle
 import org.apache.commons.lang3.text.WordUtils
 
-class CigarSearchResultsActivity extends Activity
+class SearchResultsActivity extends Activity
 with TypedActivity
-with BackNavigation[CigarSearchFormActivity] {
-  override def parentActivity = classOf[CigarSearchFormActivity]
+with BackNavigation[SearchFormActivity] {
+  override def parentActivity = classOf[SearchFormActivity]
 
   lazy val cigarName = WordUtils.capitalize(getIntent.getStringExtra("cigarName"))
   lazy val locationName = getIntent.getStringExtra("locationName")
@@ -49,5 +50,5 @@ with BackNavigation[CigarSearchFormActivity] {
   }
 
   def updateTitle = getActionBar.setTitle(cigarName)
-  def searchResultsFragment = getFragmentManager.findFragmentById(R.id.cigar_search_results_list).asInstanceOf[CigarSearchResultsFragment]
+  def searchResultsFragment = getFragmentManager.findFragmentById(R.id.cigar_search_results_list).asInstanceOf[SearchResultsFragment]
 }

@@ -2,14 +2,14 @@ package com.seantheprogrammer.cigar_finder_android
 
 import org.json.{JSONObject, JSONArray}
 
-class CigarSearchResultsParser(json: String) {
+class SearchResultsParser(json: String) {
   def results = 0 until parsedResults.length map buildResult
 
   lazy val parsedResults = new JSONArray(json)
 
   def buildResult(index: Int) = {
     val rawResult = parsedResults.getJSONObject(index)
-    new CigarSearchResult(
+    new SearchResult(
       rawResult.getString("cigar"),
       buildStore(rawResult.getJSONObject("cigar_store")),
       parseBoolean(rawResult, "carried"),
@@ -18,7 +18,7 @@ class CigarSearchResultsParser(json: String) {
   }
 
   def buildStore(json: JSONObject) = {
-    new CigarStore(
+    new Store(
       json.getInt("id"),
       json.getString("name"),
       json.getDouble("latitude"),

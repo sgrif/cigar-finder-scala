@@ -5,17 +5,17 @@ import android.content.{Context, Loader}
 import android.location.Location
 import android.os.Bundle
 
-class LetMeCigarFinderThatForYou(context: Context, callback: Option[CigarSearchResults] => Unit)
-extends LoaderCallbacks[CigarSearchResults] {
-  type L = Loader[CigarSearchResults]
+class LetMeCigarFinderThatForYou(context: Context, callback: Option[SearchResults] => Unit)
+extends LoaderCallbacks[SearchResults] {
+  type L = Loader[SearchResults]
 
   override def onCreateLoader(id: Int, args: Bundle) = {
     val cigarName = args.getString("cigarName")
     val location = args.getParcelable[Location]("location")
-    new CigarSearchResultsLoader(context, cigarName, location)
+    new SearchResultsLoader(context, cigarName, location)
   }
 
-  override def onLoadFinished(l: L, results: CigarSearchResults) = {
+  override def onLoadFinished(l: L, results: SearchResults) = {
     callback(Some(results))
   }
 

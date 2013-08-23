@@ -1,6 +1,6 @@
 package com.seantheprogrammer.cigar_finder_android.tests
 
-import com.seantheprogrammer.cigar_finder_android.CigarSearchResultsParser
+import com.seantheprogrammer.cigar_finder_android.SearchResultsParser
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest._
 
@@ -14,7 +14,7 @@ class CigarSearchResultsParserSpecs extends Spec with ShouldMatchers {
         "carried":true,"updated_at":"2013-04-14T02:42:31.931Z"}]
       """
 
-      val parser = new CigarSearchResultsParser(json)
+      val parser = new SearchResultsParser(json)
       val result = parser.results(0)
       val store = result.store
 

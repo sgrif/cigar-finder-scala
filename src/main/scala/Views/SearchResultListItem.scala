@@ -2,7 +2,7 @@ package com.seantheprogrammer.cigar_finder_android
 
 import android.view.View
 
-class CigarSearchResultListItem(result: CigarSearchResult) extends ListItem[CigarSearchResult](result) with FindView {
+class SearchResultListItem(result: SearchResult) extends ListItem[SearchResult](result) with FindView {
   override def layoutId = R.layout.result_list_item
 
   override def convertView(view: View) = {

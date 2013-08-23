@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.view.View
 
-class CigarSearchFormActivity extends Activity
+class SearchFormActivity extends Activity
 with TypedActivity
 with LoaderManager.LoaderCallbacks[IndexedSeq[String]] {
   override def onCreate(bundle: Bundle) {
@@ -20,7 +20,7 @@ with LoaderManager.LoaderCallbacks[IndexedSeq[String]] {
     val locationName = findView(TR.inputLocationName).getText.toString.trim
 
     if (!cigarName.isEmpty) {
-      val intent = new Intent(this, classOf[CigarSearchResultsActivity])
+      val intent = new Intent(this, classOf[SearchResultsActivity])
       intent.putExtra("cigarName", cigarName)
       intent.putExtra("locationName", locationName)
       startActivity(intent)
