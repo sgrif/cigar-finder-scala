@@ -17,6 +17,7 @@ with BackNavigation[CigarSearchFormActivity] {
   override def onCreate(savedInstanceState: Bundle) = {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.cigar_search_results_activity)
+
     if (savedInstanceState == null) {
       loadLocation
     }
