@@ -17,6 +17,8 @@ object General {
     useProguard in Android := true
   )
 
+  lazy val loopjImageUrl = "http://cloud.github.com/downloads/loopj/android-smart-image-view/android-smart-image-view-1.0.0.jar"
+
   lazy val fullAndroidSettings =
     General.settings ++
     AndroidProject.androidSettings ++
@@ -29,7 +31,7 @@ object General {
       libraryDependencies += "com.android.support" % "support-v4" % "18.0.0",
       libraryDependencies += "commons-io" % "commons-io" % "2.4",
       libraryDependencies += "org.apache.commons" % "commons-lang3" % "3.1",
-      libraryDependencies += "com.webimageloader" % "webimageloader" % "1.2.0"
+      libraryDependencies += "com.loopj.android" % "image" % "1.0.0" from loopjImageUrl
     )
 }
 
@@ -39,14 +41,4 @@ object AndroidBuild extends Build {
     file("."),
     settings = General.fullAndroidSettings
   )
-
-  lazy val tests = Project (
-    "tests",
-    file("tests"),
-    settings = General.settings ++
-               AndroidTest.androidSettings ++
-               General.proguardSettings ++ Seq (
-      name := "CigarFinderTests"
-    )
-  ) dependsOn main
 }
