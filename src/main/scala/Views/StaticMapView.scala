@@ -7,7 +7,7 @@ import android.location.Location
 import com.loopj.android.image.SmartImageView
 
 class StaticMapView(context: Context, attrs: AttributeSet)
-extends SmartImageView(context, attrs) {
+extends SmartImageView(context, attrs) with FadeInImage {
   var location: Option[Location] = None
 
   override def onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) = location match {
