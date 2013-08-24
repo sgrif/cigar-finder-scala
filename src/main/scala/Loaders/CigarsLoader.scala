@@ -22,5 +22,5 @@ extends AsyncTaskLoader[IndexedSeq[String]](context) {
 
   def cigarsJson = IOUtils.toString(apiUrl, "UTF-8")
 
-  lazy val apiUrl = new URL("http://cigar-finder.com/cigars.json")
+  lazy val apiUrl = new URL(CigarFinder.baseUrl + "cigars.json")
 }

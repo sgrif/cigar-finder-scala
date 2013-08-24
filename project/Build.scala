@@ -28,7 +28,8 @@ object General {
       libraryDependencies += "org.scalatest" %% "scalatest" % "1.8" % "test",
       libraryDependencies += "com.android.support" % "support-v4" % "18.0.0",
       libraryDependencies += "commons-io" % "commons-io" % "2.4",
-      libraryDependencies += "org.apache.commons" % "commons-lang3" % "3.1"
+      libraryDependencies += "org.apache.commons" % "commons-lang3" % "3.1",
+      libraryDependencies += "com.webimageloader" % "webimageloader" % "1.2.0"
     )
 }
 
