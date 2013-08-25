@@ -17,16 +17,7 @@ class SearchResultsParser(json: String) {
     )
   }
 
-  def buildStore(json: JSONObject) = {
-    new Store(
-      json.getInt("id"),
-      json.getString("name"),
-      json.getDouble("latitude"),
-      json.getDouble("longitude"),
-      json.getString("address"),
-      json.getString("phone_number")
-    )
-  }
+  def buildStore(json: JSONObject) = new StoreParser(json).store
 
   def parseBoolean(json: JSONObject, key: String): Option[Boolean] = json.isNull(key) match {
     case true => None
