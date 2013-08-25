@@ -1,8 +1,11 @@
 package com.seantheprogrammer.cigar_finder_android
 
-import android.content.Context
+import android.app.PendingIntent
+import android.content.{Context, Intent}
+import android.os.Bundle
 import com.google.android.gms.location.{Geofence, LocationClient}
 import com.google.android.gms.common.GooglePlayServicesClient
+import scala.collection.JavaConversions._
 
 class Geofencer(context: Context, stores: IndexedSeq[Store]) {
   private var inProgress = _locationClient.isEmpty
@@ -20,6 +23,8 @@ class Geofencer(context: Context, stores: IndexedSeq[Store]) {
     locationClient = None
   }
 
+  lazy val geofences: java.util.List[Geofence] = stores.map(buildGeofence).toList
+
   private def buildGeofence(store: Store) = {
     new Geofence.Builder()
       .setRequestId(store.id.toString)
@@ -29,9 +34,18 @@ class Geofencer(context: Context, stores: IndexedSeq[Store]) {
   }
 
   object OnConnect extends GooglePlayServicesClient.ConnectionCallbacks {
+    override def onDisconnected {}
+    override def onConnected(args: Bundle) = {
+      val intent = new Intent(context, classOf[InventoryKeeper])
+      val pendingIntent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+      locationClient.addGeofences(geofences, pendingIntent, OnCompletion)
+    }
   }
 
   object OnFailure extends GooglePlayServicesClient.OnConnectionFailedListener {
+  }
+
+  object OnCompletion extends LocationClient.OnAddGeofencesResultListener {
   }
 
   private lazy val playServices = new PlayServices(context)
