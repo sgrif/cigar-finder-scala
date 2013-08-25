@@ -8,14 +8,14 @@ import com.google.android.gms.common.{ConnectionResult, GooglePlayServicesClient
 import scala.collection.JavaConversions._
 
 class Geofencer(context: Context, stores: IndexedSeq[Store]) {
-  private var inProgress = _locationClient.isEmpty
+  private def inProgress = _locationClient.isEmpty
 
   def updateAlerts: Unit = playServices.isAvailable match {
     case true => inProgress match {
       case true => locationClient.disconnect; updateAlerts
       case false => locationClient.connect
     }
-    case false => // Do nothing
+    case false => android.util.Log.d("CigarFinder", "Play services unavailable")
   }
 
   lazy val geofences: java.util.List[Geofence] = stores.map(buildGeofence).toList

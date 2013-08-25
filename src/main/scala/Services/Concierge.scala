@@ -25,7 +25,7 @@ class Concierge extends Service {
     }
   }
 
-  private def onStoresLoaded(stores: IndexedSeq[Store]) = new Geofencer(stores).updateAlerts
+  private def onStoresLoaded(stores: IndexedSeq[Store]) = new Geofencer(this, stores).updateAlerts
 
   private def shouldUpdateForLocation(location: Location) = {
     val largeEnoughDistance: Boolean = Concierge.lastUpdatedLocation match {

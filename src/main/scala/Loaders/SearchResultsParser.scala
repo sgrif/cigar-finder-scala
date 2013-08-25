@@ -9,11 +9,17 @@ class SearchResultsParser(json: String) {
 
   def buildResult(index: Int) = {
     val rawResult = parsedResults.getJSONObject(index)
+    new SearchResultParser(rawResult).result
+  }
+}
+
+class SearchResultParser(json: JSONObject) {
+  def result = {
     new SearchResult(
-      rawResult.getString("cigar"),
-      buildStore(rawResult.getJSONObject("cigar_store")),
-      parseBoolean(rawResult, "carried"),
-      rawResult.getString("updated_at")
+      json.getString("cigar"),
+      buildStore(json.getJSONObject("cigar_store")),
+      parseBoolean(json, "carried"),
+      json.getString("updated_at")
     )
   }
 
