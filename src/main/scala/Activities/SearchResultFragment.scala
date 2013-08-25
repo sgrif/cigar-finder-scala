@@ -1,11 +1,27 @@
 package com.seantheprogrammer.cigar_finder_android
 
+import android.app.Activity
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.{View, LayoutInflater, ViewGroup}
+import android.view._
 
 class SearchResultFragment extends Fragment with FindView with OnClick {
   lazy val result = getArguments.getParcelable[SearchResult]("searchResult")
+
+  override def onCreate(b: Bundle) = {
+    super.onCreate(b)
+    setHasOptionsMenu(true)
+  }
+
+  override def onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) = {
+    inflater.inflate(R.menu.detail_menu, menu)
+  }
+
+  override def onOptionsItemSelected(item: MenuItem) = item.getItemId match {
+    case R.id.report_carried => callbacks.updateResult(result, true); true
+    case R.id.report_not_carried => callbacks.updateResult(result, false); true
+    case _ => super.onOptionsItemSelected(item)
+  }
 
   override def onCreateView(inflater: LayoutInflater, parent: ViewGroup, b: Bundle) = {
     val view = inflater.inflate(R.layout.search_result_detail_fragment, parent, false)
@@ -58,6 +74,20 @@ class SearchResultFragment extends Fragment with FindView with OnClick {
     case true => "is carried"
     case false => "is not carried"
   }
+
+  private var callbacks: SearchResultFragment.Callbacks = DummyCallbacks
+
+  override def onAttach(activity: Activity) = {
+    super.onAttach(activity)
+    callbacks = activity match {
+      case cb: SearchResultFragment.Callbacks => cb
+      case _ => DummyCallbacks
+    }
+  }
+
+  object DummyCallbacks extends SearchResultFragment.Callbacks {
+    override def updateResult(result: SearchResult, carried: Boolean) {}
+  }
 }
 
 object SearchResultFragment {
@@ -67,5 +97,9 @@ object SearchResultFragment {
     val fragment = new SearchResultFragment
     fragment.setArguments(args)
     fragment
+  }
+
+  trait Callbacks {
+    def updateResult(result: SearchResult, carried: Boolean): Unit
   }
 }

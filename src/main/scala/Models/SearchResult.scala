@@ -2,9 +2,9 @@ package com.seantheprogrammer.cigar_finder_android
 
 import android.os.{Parcelable, Parcel}
 import java.text.SimpleDateFormat;
-import java.util.TimeZone;
+import java.util.{Date, TimeZone};
 
-class SearchResult(val cigar: String, val store: Store, val carried: Option[Boolean], updatedAt: String)
+case class SearchResult(cigar: String, store: Store, carried: Option[Boolean], updatedAt: String)
 extends Parcelable with TypedParceling {
   def isCarried = carried match {
     case Some(carried) => carried
@@ -38,4 +38,6 @@ object SearchResult extends TypedParceling {
     format.setTimeZone(TimeZone.getTimeZone("UTC"))
     format
   }
+
+  def nowString = updatedFormat.format(new Date)
 }

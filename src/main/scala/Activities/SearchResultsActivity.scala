@@ -19,27 +19,42 @@ with BackNavigation[SearchFormActivity] {
   override def onCreate(savedInstanceState: Bundle) = {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.cigar_search_results_activity)
+    updateTitle
 
     if (savedInstanceState == null) {
       loadLocation
     }
   }
 
-  override def onSaveInstanceState(outState: Bundle) = location match {
-    case Some(location) => outState.putParcelable("location", location)
-    case None => //Do nothing
+  override def onSaveInstanceState(outState: Bundle) = {
+    super.onSaveInstanceState(outState)
+    location match {
+      case Some(location) => outState.putParcelable("location", location)
+      case None => //Do nothing
+    }
   }
 
-  override def onRestoreInstanceState(state: Bundle) = state.getParcelable[Location]("location") match {
-    case location: Location => performSearch(location)
-    case _ => // Do nothing
+  override def onRestoreInstanceState(state: Bundle) = {
+    super.onRestoreInstanceState(state)
+    state.getParcelable[Location]("location") match {
+      case location: Location => this.location = Some(location)
+      case _ => // Do nothing
+    }
   }
 
   override def onSearchResultClicked(results: SearchResults, id: Int) = {
     val intent = new Intent(this, classOf[SearchResultsDetailActivity])
     intent.putExtra("searchResults", results)
-    intent.putExtra("tappedId", id)
-    startActivity(intent)
+    intent.putExtra("tappedId", id.toInt)
+    startActivityForResult(intent, 1)
+  }
+
+  override def onActivityResult(code: Int, result: Int, data: Intent) = {
+    if (result == Activity.RESULT_OK) {
+      val index = data.getIntExtra("resultIndex", 0)
+      val carried = data.getBooleanExtra("carried", false)
+      searchResultsFragment.updateResultCarried(index, carried)
+    }
   }
 
   def loadLocation = {
@@ -53,7 +68,6 @@ with BackNavigation[SearchFormActivity] {
 
   def performSearch(location: Location) = {
     this.location = Some(location)
-    updateTitle
     searchResultsFragment.performSearch(cigarName, location)
   }
 

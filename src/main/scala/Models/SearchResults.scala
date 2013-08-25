@@ -10,6 +10,17 @@ class SearchResults(results: IndexedSeq[SearchResult]) extends Parcelable with T
   def noInformation = results.filter { !_.hasInformation }
 
   def size = results.size
+  def indexOf(result: SearchResult) = sorted.indexOf(result)
+  def indexForId(id: Int) = sorted.indexWhere(_.store.id == id)
+
+  def updateResultCarried(index: Int, carried: Boolean) = {
+    val newUpdatedAt = SearchResult.nowString
+    val newResult = sorted(index).copy(
+      carried = Some(carried),
+      updatedAt = newUpdatedAt
+    )
+    new SearchResults(sorted.updated(index, newResult))
+  }
 
   override def describeContents = 0
   override def writeToParcel(out: Parcel, flags: Int) = {

@@ -14,6 +14,14 @@ class SearchResultsFragment extends ListFragment {
   lazy val adapter = new CigarSearchResultsAdapter(getActivity)
   lazy val cigarSearcher = new LetMeCigarFinderThatForYou(getActivity, onResultsLoaded)
 
+  override def onCreate(savedInstanceState: Bundle) = {
+    super.onCreate(savedInstanceState)
+    if (savedInstanceState != null) {
+      android.util.Log.d("CigarFinder", "Restoring instance state")
+      onResultsLoaded(Some(savedInstanceState.getParcelable("results")))
+    }
+  }
+
   override def onAttach(activity: Activity) = {
     super.onAttach(activity)
 
@@ -34,6 +42,16 @@ class SearchResultsFragment extends ListFragment {
       case result: SearchResult => callbacks.onSearchResultClicked(adapter.results, id.toInt)
       case _ => //Do nothing
     }
+  }
+
+  override def onSaveInstanceState(out: Bundle) = {
+    super.onSaveInstanceState(out)
+    out.putParcelable("results", adapter.results)
+  }
+
+  def updateResultCarried(index: Int, carried: Boolean) = {
+    val results = adapter.results.updateResultCarried(index, carried)
+    onResultsLoaded(Some(results))
   }
 
   def onResultsLoaded(results: Option[SearchResults]) = {

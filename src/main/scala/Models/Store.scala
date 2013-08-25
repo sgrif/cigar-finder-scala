@@ -2,13 +2,13 @@ package com.seantheprogrammer.cigar_finder_android
 
 import android.os.{Parcel, Parcelable}
 
-class Store(
-  val id: Int,
-  val name: String,
-  val latitude: Double,
-  val longitude: Double,
-  val address: String,
-  val phoneNumber: String
+case class Store(
+  id: Int,
+  name: String,
+  latitude: Double,
+  longitude: Double,
+  address: String,
+  phoneNumber: String
 ) extends Parcelable with TypedParceling {
   def location = new ConstructedLocation(latitude, longitude)
 
