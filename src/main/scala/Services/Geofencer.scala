@@ -3,8 +3,8 @@ package com.seantheprogrammer.cigar_finder_android
 import android.app.PendingIntent
 import android.content.{Context, Intent}
 import android.os.Bundle
-import com.google.android.gms.location.{Geofence, LocationClient}
-import com.google.android.gms.common.GooglePlayServicesClient
+import com.google.android.gms.location.{LocationStatusCodes, Geofence, LocationClient}
+import com.google.android.gms.common.{ConnectionResult, GooglePlayServicesClient}
 import scala.collection.JavaConversions._
 
 class Geofencer(context: Context, stores: IndexedSeq[Store]) {
@@ -12,15 +12,10 @@ class Geofencer(context: Context, stores: IndexedSeq[Store]) {
 
   def updateAlerts: Unit = playServices.isAvailable match {
     case true => inProgress match {
-      case true => resetConnection; updateAlerts
+      case true => locationClient.disconnect; updateAlerts
       case false => locationClient.connect
     }
     case false => // Do nothing
-  }
-
-  private def resetConnection = {
-    locationClient.disconnect
-    locationClient = None
   }
 
   lazy val geofences: java.util.List[Geofence] = stores.map(buildGeofence).toList
@@ -34,7 +29,7 @@ class Geofencer(context: Context, stores: IndexedSeq[Store]) {
   }
 
   object OnConnect extends GooglePlayServicesClient.ConnectionCallbacks {
-    override def onDisconnected {}
+    override def onDisconnected = locationClient = None
     override def onConnected(args: Bundle) = {
       val intent = new Intent(context, classOf[InventoryKeeper])
       val pendingIntent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -43,9 +38,15 @@ class Geofencer(context: Context, stores: IndexedSeq[Store]) {
   }
 
   object OnFailure extends GooglePlayServicesClient.OnConnectionFailedListener {
+    override def onConnectionFailed(result: ConnectionResult) = {
+      android.util.Log.d("CigarFinder", "Connection failed with result code %d".format(result.getErrorCode))
+    }
   }
 
   object OnCompletion extends LocationClient.OnAddGeofencesResultListener {
+    override def onAddGeofencesResult(status: Int, ids: Array[String]) = {
+      locationClient.disconnect
+    }
   }
 
   private lazy val playServices = new PlayServices(context)
