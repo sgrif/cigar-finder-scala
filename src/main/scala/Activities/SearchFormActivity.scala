@@ -13,6 +13,7 @@ with LoaderManager.LoaderCallbacks[IndexedSeq[String]] {
     super.onCreate(bundle)
     setContentView(R.layout.activity_cigar_search_form)
     getLoaderManager.initLoader(0, null, this)
+    beginLocationUpdates
   }
 
   def performSearch(v: View) = {
@@ -34,4 +35,6 @@ with LoaderManager.LoaderCallbacks[IndexedSeq[String]] {
     cigarInput.setAdapter(new ArrayAdapter[String](this, R.layout.dropdown_item, data.toArray))
   }
   override def onCreateLoader(id: Int, args: Bundle) = new CigarsLoader(this)
+
+  private def beginLocationUpdates = new Surveillance(this).beginTracking
 }
