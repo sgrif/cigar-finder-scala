@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.{View, LayoutInflater, ViewGroup}
 
-class SearchResultFragment extends Fragment with FindView {
+class SearchResultFragment extends Fragment with FindView with OnClick {
   lazy val result = getArguments.getParcelable[SearchResult]("searchResult")
 
   override def onCreateView(inflater: LayoutInflater, parent: ViewGroup, b: Bundle) = {
@@ -14,9 +14,17 @@ class SearchResultFragment extends Fragment with FindView {
     view.findView(TR.store_address).setText(result.store.address)
     setupCarriedDescription(view)
     view.findView(TR.static_map).location = Some(result.store.location)
+    view.findView(TR.store_map_button).onClick(openMap)
+    view.findView(TR.store_directions_button).onClick(openDirections)
+    view.findView(TR.store_call_button).onClick(callStore)
+    view.findView(TR.static_map).onClick(openMap)
 
     view
   }
+
+  private def openMap = new OpenMap(getActivity, result.store).run
+  private def openDirections = new OpenDirections(getActivity, result.store).run
+  private def callStore = new CallStore(getActivity, result.store).run
 
   private def setupCarriedDescription(view: View) = {
     view.findView(TR.last_reported).setText(carriedDescription)
