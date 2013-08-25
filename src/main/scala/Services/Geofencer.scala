@@ -31,9 +31,7 @@ class Geofencer(context: Context, stores: IndexedSeq[Store]) {
   object OnConnect extends GooglePlayServicesClient.ConnectionCallbacks {
     override def onDisconnected = locationClient = None
     override def onConnected(args: Bundle) = {
-      val intent = new Intent(context, classOf[InventoryKeeper])
-      val pendingIntent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-      locationClient.addGeofences(geofences, pendingIntent, OnCompletion)
+      locationClient.removeGeofences(inventoryKeeperIntent, OnRemoved)
     }
   }
 
@@ -43,10 +41,23 @@ class Geofencer(context: Context, stores: IndexedSeq[Store]) {
     }
   }
 
-  object OnCompletion extends LocationClient.OnAddGeofencesResultListener {
+  object OnRemoved extends LocationClient.OnRemoveGeofencesResultListener {
+    override def onRemoveGeofencesByPendingIntentResult(status: Int, intent: PendingIntent) = status match {
+      case LocationStatusCodes.SUCCESS => locationClient.addGeofences(geofences, inventoryKeeperIntent, OnAdded)
+      case _ => locationClient.disconnect //Removal failed. What should we do?
+    }
+    override def onRemoveGeofencesByRequestIdsResult(status: Int, ids: Array[String]) {}
+  }
+
+  object OnAdded extends LocationClient.OnAddGeofencesResultListener {
     override def onAddGeofencesResult(status: Int, ids: Array[String]) = {
       locationClient.disconnect
     }
+  }
+
+  lazy val inventoryKeeperIntent = {
+    val intent = new Intent(context, classOf[InventoryKeeper])
+    PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
   }
 
   private lazy val playServices = new PlayServices(context)
