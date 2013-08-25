@@ -19,6 +19,8 @@ object General {
 
   lazy val loopjImageUrl = "http://cloud.github.com/downloads/loopj/android-smart-image-view/android-smart-image-view-1.0.0.jar"
   lazy val loopjHttpUrl = "https://raw.github.com/loopj/android-async-http/master/releases/android-async-http-1.4.3.jar"
+  lazy val gmsUrl =
+    "file:///usr/local/opt/android-sdk/extras/google/google_play_services/libproject/google-play-services_lib/libs/google-play-services.jar"
 
   lazy val fullAndroidSettings =
     General.settings ++
@@ -31,6 +33,7 @@ object General {
       proguardOption in Android := "@project/proguard.cfg",
       libraryDependencies += "org.scalatest" %% "scalatest" % "1.8" % "test",
       libraryDependencies += "com.android.support" % "support-v4" % "18.0.0",
+      libraryDependencies += "com.google.android" % "gms" % "3.2.25" from gmsUrl,
       libraryDependencies += "commons-io" % "commons-io" % "2.4",
       libraryDependencies += "org.apache.commons" % "commons-lang3" % "3.1",
       libraryDependencies += "com.loopj.android" % "image" % "1.0.0" from loopjImageUrl,

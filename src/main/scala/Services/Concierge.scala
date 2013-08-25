@@ -25,11 +25,7 @@ class Concierge extends Service {
     }
   }
 
-  private def onStoresLoaded(stores: IndexedSeq[Store]) = {
-    stores.foreach { store =>
-      android.util.Log.d("CigarFinder", store.name)
-    }
-  }
+  private def onStoresLoaded(stores: IndexedSeq[Store]) = new Geofencer(stores).updateAlerts
 
   private def shouldUpdateForLocation(location: Location) = {
     val largeEnoughDistance: Boolean = Concierge.lastUpdatedLocation match {
