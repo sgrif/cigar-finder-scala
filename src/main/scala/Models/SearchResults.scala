@@ -19,6 +19,7 @@ class SearchResults(results: IndexedSeq[SearchResult]) extends Parcelable with T
       carried = Some(carried),
       updatedAt = newUpdatedAt
     )
+    new ResultUpdater(newResult).execute
     new SearchResults(sorted.updated(index, newResult))
   }
 

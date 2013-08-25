@@ -18,6 +18,7 @@ object General {
   )
 
   lazy val loopjImageUrl = "http://cloud.github.com/downloads/loopj/android-smart-image-view/android-smart-image-view-1.0.0.jar"
+  lazy val loopjHttpUrl = "https://raw.github.com/loopj/android-async-http/master/releases/android-async-http-1.4.3.jar"
 
   lazy val fullAndroidSettings =
     General.settings ++
@@ -33,6 +34,7 @@ object General {
       libraryDependencies += "commons-io" % "commons-io" % "2.4",
       libraryDependencies += "org.apache.commons" % "commons-lang3" % "3.1",
       libraryDependencies += "com.loopj.android" % "image" % "1.0.0" from loopjImageUrl,
+      libraryDependencies += "com.loopj.android" % "http" % "1.4.3" from loopjHttpUrl,
       libraryDependencies += "org.ocpsoft.prettytime" % "prettytime" % "3.0.2.Final"
     )
 }
