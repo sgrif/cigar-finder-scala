@@ -21,15 +21,34 @@ class SearchResultFragment extends Fragment with FindView {
   private def setupCarriedDescription(view: View) = {
     view.findView(TR.last_reported).setText(carriedDescription)
     if (result.hasInformation) {
-
+      val time = new TimeToString(result.lastUpdated)
+      view.findView(TR.last_updated_at_number).setText(time.numberPart)
+      view.findView(TR.last_updated_at_text).setText(time.unitPart)
     } else {
       view.findView(TR.last_updated_container).setVisibility(View.GONE)
     }
   }
 
-  private def carriedDescription = result.hasInformation match {
-    case true => "Foo"
-    case false => "Bar"
+  private def carriedDescription = {
+    val builder = new StringBuilder
+
+    if (result.hasInformation) {
+      builder.append("Time since last report that ")
+        .append(result.cigar).append(' ')
+        .append(carriedPresentTense)
+        .append(" at this location")
+    } else {
+      builder.append("We have no information on whether ")
+        .append(result.cigar)
+        .append(" is carried at this location")
+    }
+
+    builder.toString
+  }
+
+  private def carriedPresentTense = result.isCarried match {
+    case true => "is carried"
+    case false => "is not carried"
   }
 }
 

@@ -29,5 +29,5 @@ class SearchResultListItem(result: SearchResult) extends ListItem[SearchResult](
 
   override def id = result.storeId
 
-  def lastUpdated = "just now"
+  def lastUpdated = new TimeToString(result.lastUpdated).toString
 }

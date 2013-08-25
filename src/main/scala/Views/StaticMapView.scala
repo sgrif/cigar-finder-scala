@@ -1,6 +1,5 @@
 package com.seantheprogrammer.cigar_finder_android
 
-import android.widget.ImageView
 import android.util.AttributeSet
 import android.content.Context
 import android.location.Location
