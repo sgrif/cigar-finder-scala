@@ -26,14 +26,18 @@
     android:debuggable="true">
 
     <activity
-      android:label="@string/app_name"
-      android:theme="@style/cigar_finder.no_action_bar"
-      android:name=".SearchFormActivity">
+      android:name=".MainActivity"
+      >
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
+    <activity
+      android:label="@string/app_name"
+      android:theme="@style/cigar_finder.no_action_bar"
+      android:name=".SearchFormActivity"
+      />
     <activity android:name=".SearchResultsActivity" />
     <activity android:name=".SearchResultsDetailActivity" />
 
