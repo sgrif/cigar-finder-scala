@@ -27,6 +27,7 @@
 
     <activity
       android:name=".MainActivity"
+      android:noHistory="true"
       >
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
@@ -44,6 +45,7 @@
     <receiver android:name=".WhiteVan" />
 
     <service android:name=".Concierge" />
+    <service android:name=".InventoryKeeper" />
   </application>
 
   <uses-sdk android:minSdkVersion="17"/>

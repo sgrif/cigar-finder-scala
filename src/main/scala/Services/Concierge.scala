@@ -22,6 +22,7 @@ class Concierge extends Service {
   private def lookupStores(location: Location) = {
     if (shouldUpdateForLocation(location)) {
       new YellowPages(this, location).lookupStores(onStoresLoaded)
+      Concierge.lastUpdatedLocation = location
     }
   }
 

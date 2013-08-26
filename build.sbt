@@ -4,11 +4,13 @@ androidDefaults
 // Name of your app
 name := "CigarFinder"
 
+keyalias := "release"
+
 // Version of your app
-version := "0.1"
+version := "1.1.0"
 
 // Version number of your app
-versionCode := 0
+versionCode := 6
 
 // Version of Scala
 scalaVersion := "2.10.1"
@@ -18,7 +20,7 @@ platformName := "android-17"
 
 libraryDependencies += "com.android.support" % "support-v4" % "18.0.0"
 
-libraryDependencies += aarlib("com.google.android.gms" % "play-services" % "3.2.25")
+libraryDependencies += aarlib("com.google.android.gms" % "play-services" % "3.1.36")
 
 libraryDependencies += "commons-io" % "commons-io" % "2.4"
 
@@ -42,7 +44,9 @@ proguardOptions += "-keep class android.support.v4.app.Fragment"
 
 proguardOptions += "-keep class android.support.v4.app.Fragment$SavedState"
 
-proguardOptions += "-keep class com.google.android.gms.**"
+proguardOptions += "-keep class com.google.android.gms.location.Geofence"
+
+proguardOptions += "-keep class com.google.android.gms.common.ConnectionResult"
 
 proguardOptions += "-keep class scala.Function0"
 

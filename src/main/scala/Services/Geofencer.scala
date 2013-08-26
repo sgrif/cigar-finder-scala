@@ -23,6 +23,7 @@ class Geofencer(context: Context, stores: IndexedSeq[Store]) {
   private def buildGeofence(store: Store) = {
     new Geofence.Builder()
       .setRequestId(store.id.toString)
+      .setExpirationDuration(Geofence.NEVER_EXPIRE)
       .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
       .setCircularRegion(store.latitude, store.longitude, 25)
       .build

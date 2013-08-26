@@ -11,5 +11,5 @@ class MissingInformationLoader(id: String) {
     new SearchResultParser(json).result
   }
 
-  lazy val url = new URL(CigarFinder.baseUrl + "cigar_stores/" + id + "missing_information.json")
+  lazy val url = new URL(CigarFinder.baseUrl + "cigar_stores/" + id + "/missing_information.json")
 }
