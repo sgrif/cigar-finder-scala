@@ -2,22 +2,17 @@ package com.seantheprogrammer.cigar_finder_android
 
 import org.scaloid.common._
 import android.content.Intent
-import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.view.View
+import android.util.TypedValue
 
 class SearchFormActivity extends SActivity
 with TypedActivity {
-  override def onCreate(savedInstanceState: Bundle) {
-    super.onCreate(savedInstanceState)
+  onCreate {
     setContentView(R.layout.activity_cigar_search_form)
-
-    if (savedInstanceState == null) {
-      new CigarsLoader().loadCigars { cigars => runOnUiThread(onCigarsLoaded(cigars)) }
-    }
+    new CigarsLoader().loadCigars(setCigarAutocomplete)
+    findView(TR.searchSubmit).onClick(performSearch)
   }
 
-  def performSearch(v: View) = {
+  def performSearch = {
     val cigarName = findView(TR.inputCigarName).getText.toString.trim
     val locationName = findView(TR.inputLocationName).getText.toString.trim
 
@@ -29,9 +24,9 @@ with TypedActivity {
     }
   }
 
-  private def onCigarsLoaded(cigars: IndexedSeq[String]) = {
-    val cigarInput = findView(TR.inputCigarName)
-    cigarInput.setThreshold(0)
-    cigarInput.setAdapter(new ArrayAdapter[String](this, R.layout.dropdown_item, cigars.toArray))
+  private def setCigarAutocomplete(cigars: IndexedSeq[String]) = runOnUiThread {
+    findView(TR.inputCigarName)
+      .threshold(0)
+      .adapter(SArrayAdapter(R.layout.dropdown_item, cigars: _*))
   }
 }

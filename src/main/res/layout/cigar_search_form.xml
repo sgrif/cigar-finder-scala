@@ -55,6 +55,5 @@
   <Button
     android:text="Find it!"
     android:id="@+id/searchSubmit"
-    android:onClick="performSearch"
     style="@style/search_form_button"/>
 </merge>

@@ -8,10 +8,8 @@ import org.json.JSONArray
 
 class CigarsLoader {
   def loadCigars(callback: IndexedSeq[String] => Unit) = {
-    android.util.Log.d("CigarFinder", "Loading Cigars")
     val f = future { Source.fromURL(cigarsUrl) }
     for (content <- f) {
-      android.util.Log.d("CigarFinder", "Cigars loaded -- parsing")
       val json = new JSONArray(content.mkString)
       callback(0 until json.length map(json.getString(_)))
     }
