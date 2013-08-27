@@ -1,25 +1,22 @@
 package com.seantheprogrammer.cigar_finder_android
 
-import android.app.LoaderManager.LoaderCallbacks
-import android.content.{Context, Loader}
 import android.location.Location
-import android.os.Bundle
+import android.net.Uri
+import scala.concurrent.future
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.io.Source
 
-class LetMeCigarFinderThatForYou(context: Context, callback: Option[SearchResults] => Unit)
-extends LoaderCallbacks[SearchResults] {
-  type L = Loader[SearchResults]
-
-  override def onCreateLoader(id: Int, args: Bundle) = {
-    val cigarName = args.getString("cigarName")
-    val location = args.getParcelable[Location]("location")
-    new SearchResultsLoader(context, cigarName, location)
+class LetMeCigarFinderThatForYou(cigarName: String, location: Location) {
+  def loadSearchResults(callback: SearchResults => Unit) = {
+    val f = future { Source.fromURL(apiUrl) }
+    for (content <- f) {
+      val parser = new SearchResultsParser(content.mkString)
+      callback(new SearchResults(parser.results))
+    }
   }
 
-  override def onLoadFinished(l: L, results: SearchResults) = {
-    callback(Some(results))
-  }
-
-  override def onLoaderReset(l: L) = {
-    callback(None)
+  private lazy val apiUrl = {
+    CigarFinder.baseUrl + "cigar_search_results.json?cigar=%s&latitude=%f&longitude=%f"
+      .format(Uri.encode(cigarName), location.getLatitude, location.getLongitude)
   }
 }

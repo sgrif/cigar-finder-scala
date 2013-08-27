@@ -1,6 +1,7 @@
 package com.seantheprogrammer.cigar_finder_android
 
 import android.location._
+import scala.language.implicitConversions
 
 class LocationManagerWithExtensions(locationManager: LocationManager) {
   def lastLocationOrReload(listener: LocationListener, isAcceptable: Location => Boolean) = {

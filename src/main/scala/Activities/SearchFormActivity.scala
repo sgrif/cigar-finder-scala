@@ -1,19 +1,20 @@
 package com.seantheprogrammer.cigar_finder_android
 
-import android.app.{Activity, LoaderManager}
-import android.content.{Loader, Intent}
+import org.scaloid.common._
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.view.View
 
-class SearchFormActivity extends Activity
-with TypedActivity
-with LoaderManager.LoaderCallbacks[IndexedSeq[String]] {
-  override def onCreate(bundle: Bundle) {
-    super.onCreate(bundle)
+class SearchFormActivity extends SActivity
+with TypedActivity {
+  override def onCreate(savedInstanceState: Bundle) {
+    super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_cigar_search_form)
-    getLoaderManager.initLoader(0, null, this)
 
+    if (savedInstanceState == null) {
+      new CigarsLoader().loadCigars { cigars => runOnUiThread(onCigarsLoaded(cigars)) }
+    }
   }
 
   def performSearch(v: View) = {
@@ -28,12 +29,9 @@ with LoaderManager.LoaderCallbacks[IndexedSeq[String]] {
     }
   }
 
-  override def onLoaderReset(l: Loader[IndexedSeq[String]]) = findView(TR.inputCigarName).getAdapter.asInstanceOf[ArrayAdapter[String]].clear
-  override def onLoadFinished(l: Loader[IndexedSeq[String]], data: IndexedSeq[String]) = {
+  private def onCigarsLoaded(cigars: IndexedSeq[String]) = {
     val cigarInput = findView(TR.inputCigarName)
     cigarInput.setThreshold(0)
-    cigarInput.setAdapter(new ArrayAdapter[String](this, R.layout.dropdown_item, data.toArray))
+    cigarInput.setAdapter(new ArrayAdapter[String](this, R.layout.dropdown_item, cigars.toArray))
   }
-  override def onCreateLoader(id: Int, args: Bundle) = new CigarsLoader(this)
-
 }

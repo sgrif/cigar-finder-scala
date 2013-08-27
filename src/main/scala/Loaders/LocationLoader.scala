@@ -45,9 +45,9 @@ class LocationLoader(context: Context, callback: Option[Location] => Any) extend
 
   object Listener extends LocationListener {
     override def onLocationChanged(location: Location) = callback(Some(location))
-    override def onStatusChanged(s: String, i: Int, b: Bundle) = null
-    override def onProviderEnabled(s: String) = null
-    override def onProviderDisabled(s: String) = null
+    override def onStatusChanged(s: String, i: Int, b: Bundle) {}
+    override def onProviderEnabled(s: String) {}
+    override def onProviderDisabled(s: String) {}
   }
 }
 

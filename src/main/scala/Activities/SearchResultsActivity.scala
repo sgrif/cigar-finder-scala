@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
-import org.apache.commons.lang3.text.WordUtils
 
 class SearchResultsActivity extends Activity
 with TypedActivity
@@ -12,7 +11,7 @@ with SearchResultsFragment.Callbacks
 with BackNavigation[SearchFormActivity] {
   override def parentActivity = classOf[SearchFormActivity]
 
-  lazy val cigarName = WordUtils.capitalize(getIntent.getStringExtra("cigarName"))
+  lazy val cigarName = getIntent.getStringExtra("cigarName").capitalize
   lazy val locationName = getIntent.getStringExtra("locationName")
   private var location: Option[Location] = None
 

@@ -1,26 +1,21 @@
 package com.seantheprogrammer.cigar_finder_android
 
-import android.content.{Context, AsyncTaskLoader}
-import org.apache.commons.io.IOUtils
+import scala.io.Source
+import scala.concurrent.future
+import scala.concurrent.ExecutionContext.Implicits.global
+
 import org.json.JSONArray
-import java.net.URL
 
-class CigarsLoader(context: Context)
-extends AsyncTaskLoader[IndexedSeq[String]](context) {
-  private var results: Option[IndexedSeq[String]] = None
-
-  override def loadInBackground = {
-    val json = new JSONArray(cigarsJson)
-    results = Some(0 until json.length map(json.getString(_)))
-    results.get
+class CigarsLoader {
+  def loadCigars(callback: IndexedSeq[String] => Unit) = {
+    android.util.Log.d("CigarFinder", "Loading Cigars")
+    val f = future { Source.fromURL(cigarsUrl) }
+    for (content <- f) {
+      android.util.Log.d("CigarFinder", "Cigars loaded -- parsing")
+      val json = new JSONArray(content.mkString)
+      callback(0 until json.length map(json.getString(_)))
+    }
   }
 
-  override def onStartLoading = results match {
-    case Some(cigars) => deliverResult(cigars)
-    case None => forceLoad
-  }
-
-  def cigarsJson = IOUtils.toString(apiUrl, "UTF-8")
-
-  lazy val apiUrl = new URL(CigarFinder.baseUrl + "cigars.json")
+  private lazy val cigarsUrl = CigarFinder.baseUrl + "cigars.json"
 }

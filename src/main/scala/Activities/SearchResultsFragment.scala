@@ -1,10 +1,11 @@
 package com.seantheprogrammer.cigar_finder_android
 
-import android.app.{Activity, ListFragment}
+import android.app.{ListFragment, Activity}
 import android.location.Location
 import android.os.Bundle
 import android.view.{LayoutInflater, View, ViewGroup}
 import android.widget.ListView
+import org.scaloid.common._
 
 class SearchResultsFragment extends ListFragment {
   import SearchResultsFragment.Callbacks
@@ -12,13 +13,12 @@ class SearchResultsFragment extends ListFragment {
   private var callbacks: Callbacks = DummyCallbacks
 
   lazy val adapter = new CigarSearchResultsAdapter(getActivity)
-  lazy val cigarSearcher = new LetMeCigarFinderThatForYou(getActivity, onResultsLoaded)
 
   override def onCreate(savedInstanceState: Bundle) = {
     super.onCreate(savedInstanceState)
     if (savedInstanceState != null) {
       android.util.Log.d("CigarFinder", "Restoring instance state")
-      onResultsLoaded(Some(savedInstanceState.getParcelable("results")))
+      displayResults(savedInstanceState.getParcelable("results"))
     }
   }
 
@@ -51,23 +51,18 @@ class SearchResultsFragment extends ListFragment {
 
   def updateResultCarried(index: Int, carried: Boolean) = {
     val results = adapter.results.updateResultCarried(index, carried)
-    onResultsLoaded(Some(results))
+    displayResults(results)
   }
 
-  def onResultsLoaded(results: Option[SearchResults]) = {
-    adapter.results = results
-    setListAdapter(results.isEmpty match {
-      case false => adapter
-      case true => null
-    })
+  def displayResults(results: SearchResults) = {
+    adapter.results = Some(results)
+    runOnUiThread(setListAdapter(adapter))
   }
 
   def performSearch(cigarName: String, location: Location) = {
     clearList
-    val args = new Bundle
-    args.putString("cigarName", cigarName)
-    args.putParcelable("location", location)
-    getLoaderManager.restartLoader(0, args, cigarSearcher)
+    val cigarSearcher = new LetMeCigarFinderThatForYou(cigarName, location)
+    cigarSearcher.loadSearchResults(displayResults)
   }
 
   private def clearList = {
