@@ -25,6 +25,10 @@ class InventoryQueryNotification(context: Context, result: SearchResult) {
     notificationManager.notify(0, builder.build)
   }
 
+  def cancel = {
+    notificationManager.cancel(0)
+  }
+
   private def notificationStyle = new NotificationCompat.BigTextStyle().bigText(body)
 
   private def createIntent: PendingIntent = createIntent(None)

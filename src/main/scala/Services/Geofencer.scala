@@ -9,6 +9,7 @@ import scala.collection.JavaConversions._
 
 class Geofencer(context: Context, stores: IndexedSeq[Store]) {
   private def inProgress = _locationClient.isEmpty
+  private val geofenceRadius = 100
 
   def updateAlerts: Unit = playServices.isAvailable match {
     case true => inProgress match {
@@ -24,8 +25,8 @@ class Geofencer(context: Context, stores: IndexedSeq[Store]) {
     new Geofence.Builder()
       .setRequestId(store.id.toString)
       .setExpirationDuration(Geofence.NEVER_EXPIRE)
-      .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
-      .setCircularRegion(store.latitude, store.longitude, 25)
+      .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER | Geofence.GEOFENCE_TRANSITION_EXIT)
+      .setCircularRegion(store.latitude, store.longitude, geofenceRadius)
       .build
   }
 

@@ -10,28 +10,34 @@ class InventoryQuery(context: Context, locationClient: IntentLocationClient) {
     case false => lookupInventory
   }
 
-  def handleError = {
+  private def handleError = {
     android.util.Log.e("CigarFinder",
       "Geofence error: %d".format(locationClient.errorCode))
   }
 
-  def lookupInventory = {
+  private def lookupInventory = {
     if (locationClient.isEntering) createNotifications
     else if (locationClient.isExiting) cancelNotifications
   }
 
-  def createNotifications = {
+  private def createNotifications = {
     if (enoughTimePassed) {
       locationClient.geofences.foreach(createNotification)
     }
   }
 
-  def cancelNotifications {}
+  private def cancelNotifications = {
+    locationClient.geofences.foreach(cancelNotification)
+  }
 
-  def createNotification(geofence: Geofence) = {
+  private def createNotification(geofence: Geofence) = {
     val result = new MissingInformationLoader(geofence.getRequestId).result
     new InventoryQueryNotification(context, result).build
   }
 
-  def enoughTimePassed = true
+  private def cancelNotification(geofence: Geofence) = {
+    new InventoryQueryNotification(context, null).cancel
+  }
+
+  private def enoughTimePassed = true
 }
