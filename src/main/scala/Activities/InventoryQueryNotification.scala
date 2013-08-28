@@ -4,8 +4,10 @@ import android.content.{Intent, Context}
 import android.support.v4.app.NotificationCompat
 import android.app.{NotificationManager, Notification, PendingIntent}
 import android.os.Parcelable
+import org.scaloid.common.SIntent
 
-class InventoryQueryNotification(context: Context, result: SearchResult) {
+class InventoryQueryNotification(result: SearchResult)
+(implicit context: Context) {
   def build = {
     val builder = new NotificationCompat.Builder(context)
       .setSmallIcon(R.drawable.ic_launcher)
@@ -34,7 +36,7 @@ class InventoryQueryNotification(context: Context, result: SearchResult) {
   private def createIntent: PendingIntent = createIntent(None)
   private def createIntent(action: String): PendingIntent = createIntent(Some(action))
   private def createIntent(action: Option[String]) = {
-    val intent = new Intent(context, classOf[InventoryQueryActivity])
+    val intent = SIntent[InventoryQueryActivity]
     intent.putExtra("searchResult", result.asInstanceOf[Parcelable])
 
     action match {

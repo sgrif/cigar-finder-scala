@@ -56,7 +56,7 @@ class SearchResultsFragment extends ListFragment {
   }
 
   def displayResults(results: SearchResults) = {
-    adapter.results = Some(results)
+    adapter.results = results
     runOnUiThread(setListAdapter(adapter))
   }
 

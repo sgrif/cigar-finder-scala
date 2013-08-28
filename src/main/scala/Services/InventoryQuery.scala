@@ -4,7 +4,8 @@ import android.content.Context
 import com.google.android.gms.location.Geofence
 import InventoryKeeper.IntentLocationClient
 
-class InventoryQuery(context: Context, locationClient: IntentLocationClient) {
+class InventoryQuery(locationClient: IntentLocationClient)
+(implicit context: Context) {
   def updateInventory = locationClient.hasError match {
     case true => handleError
     case false => lookupInventory
@@ -32,11 +33,11 @@ class InventoryQuery(context: Context, locationClient: IntentLocationClient) {
 
   private def createNotification(geofence: Geofence) = {
     val result = new MissingInformationLoader(geofence.getRequestId).result
-    new InventoryQueryNotification(context, result).build
+    new InventoryQueryNotification(result).build
   }
 
   private def cancelNotification(geofence: Geofence) = {
-    new InventoryQueryNotification(context, null).cancel
+    new InventoryQueryNotification(null).cancel
   }
 
   private def enoughTimePassed = true

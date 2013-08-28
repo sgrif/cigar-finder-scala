@@ -5,14 +5,15 @@ import android.content.Intent
 import com.google.android.gms.location.{Geofence, LocationClient}
 import Geofence.{GEOFENCE_TRANSITION_ENTER, GEOFENCE_TRANSITION_EXIT}
 import scala.collection.JavaConversions._
+import org.scaloid.common._
 
-class InventoryKeeper extends IntentService("InventoryKeeper") {
+class InventoryKeeper extends IntentService("InventoryKeeper") with SContext {
   import InventoryKeeper.{LocationClientSource, IntentLocationClient}
   var locationClientSource: LocationClientSource = SimpleLocationClient
 
   override def onHandleIntent(intent: Intent) = {
-    val locationClient = locationClientSource.build(intent)
-    new InventoryQuery(this, locationClient).updateInventory
+    val locationClient = locationClientSource(intent)
+    new InventoryQuery(locationClient).updateInventory
   }
 
   class SimpleLocationClient(intent: Intent)
@@ -28,13 +29,13 @@ class InventoryKeeper extends IntentService("InventoryKeeper") {
   }
 
   object SimpleLocationClient extends LocationClientSource {
-    override def build(intent: Intent) = new SimpleLocationClient(intent)
+    override def apply(intent: Intent) = new SimpleLocationClient(intent)
   }
 }
 
 object InventoryKeeper {
   trait LocationClientSource {
-    def build(intent: Intent): IntentLocationClient
+    def apply(intent: Intent): IntentLocationClient
   }
 
   trait IntentLocationClient {

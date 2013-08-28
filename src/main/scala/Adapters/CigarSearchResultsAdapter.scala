@@ -5,26 +5,15 @@ import android.view.{LayoutInflater, View, ViewGroup}
 import android.widget.BaseAdapter
 
 class CigarSearchResultsAdapter(context: Context) extends BaseAdapter {
-  private var _results: Option[SearchResults] = None
-  private var _listItems: Option[IndexedSeq[ListItem[_]]] = None
+  private var _results: SearchResults = new SearchResults(IndexedSeq.empty)
+  var listItems: IndexedSeq[ListItem[_]] = IndexedSeq.empty
 
-  def results = _results match {
-    case Some(results) => results
-    case None => new SearchResults(IndexedSeq.empty)
-  }
-
-  def results_= (results: Option[SearchResults]) = {
+  def results = _results
+  def results_= (results: SearchResults) = {
     _results = results
     buildListItems
     notifyDataSetChanged
   }
-
-  def listItems = _listItems match {
-    case Some(listItems) => listItems
-    case None => IndexedSeq.empty
-  }
-
-  def listItems_= (listItems: IndexedSeq[ListItem[_]]) = _listItems = Some(listItems)
 
   override def getCount = results.size
 
