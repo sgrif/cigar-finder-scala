@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.{LayoutInflater, View, ViewGroup}
 import android.widget.ListView
 import org.scaloid.common._
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class SearchResultsFragment extends ListFragment {
   import SearchResultsFragment.Callbacks
@@ -62,7 +63,9 @@ class SearchResultsFragment extends ListFragment {
   def performSearch(cigarName: String, location: Location) = {
     clearList
     val cigarSearcher = new LetMeCigarFinderThatForYou(cigarName, location)
-    cigarSearcher.loadSearchResults(displayResults)
+    cigarSearcher.loadSearchResults.onSuccess {
+      case results => displayResults(results)
+    }
   }
 
   private def clearList = {

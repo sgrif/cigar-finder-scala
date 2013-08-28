@@ -7,12 +7,10 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.io.Source
 
 class LetMeCigarFinderThatForYou(cigarName: String, location: Location) {
-  def loadSearchResults(callback: SearchResults => Unit) = {
-    val f = future { Source.fromURL(apiUrl) }
-    for (content <- f) {
-      val parser = new SearchResultsParser(content.mkString)
-      callback(new SearchResults(parser.results))
-    }
+  def loadSearchResults = future {
+    val content = Source.fromURL(apiUrl)
+    val parser = new SearchResultsParser(content.mkString)
+    new SearchResults(parser.results)
   }
 
   private lazy val apiUrl = {
