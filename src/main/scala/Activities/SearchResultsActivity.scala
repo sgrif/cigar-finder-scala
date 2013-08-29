@@ -16,13 +16,15 @@ with BackNavigation[SearchFormActivity] {
   lazy val locationName = getIntent.getStringExtra("locationName")
   private var location: Option[Location] = None
 
-  override def onCreate(savedInstanceState: Bundle) = {
-    super.onCreate(savedInstanceState)
+  onCreate {
     setContentView(R.layout.cigar_search_results_activity)
     updateTitle
+  }
 
-    if (savedInstanceState == null) {
-      loadLocation
+  onResume {
+    location match {
+      case Some(location) => //Do nothing, location has loaded
+      case None => loadLocation
     }
   }
 
