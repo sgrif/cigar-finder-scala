@@ -4,8 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
+import org.scaloid.common.SActivity
 
-class SearchResultsActivity extends Activity
+class SearchResultsActivity extends SActivity
 with TypedActivity
 with SearchResultsFragment.Callbacks
 with BackNavigation[SearchFormActivity] {
@@ -57,7 +58,7 @@ with BackNavigation[SearchFormActivity] {
   }
 
   def loadLocation = {
-    new LocationLoader(this, onLocationLoaded).loadLocation(locationName)
+    new LocationLoader(onLocationLoaded).loadLocation(locationName)
   }
 
   def onLocationLoaded(result: Option[Location]) = result match {

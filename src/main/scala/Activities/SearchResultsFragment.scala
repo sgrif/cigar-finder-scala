@@ -11,14 +11,9 @@ import scala.concurrent.ExecutionContext.Implicits.global
 class SearchResultsFragment extends ListFragment {
   import SearchResultsFragment.Callbacks
 
-  private var callbacks: Callbacks = DummyCallbacks
-
-  lazy val adapter = new CigarSearchResultsAdapter(getActivity)
-
   override def onCreate(savedInstanceState: Bundle) = {
     super.onCreate(savedInstanceState)
     if (savedInstanceState != null) {
-      android.util.Log.d("CigarFinder", "Restoring instance state")
       displayResults(savedInstanceState.getParcelable("results"))
     }
   }
@@ -61,14 +56,18 @@ class SearchResultsFragment extends ListFragment {
   }
 
   def performSearch(cigarName: String, location: Location) = {
-    clearList
+    clearList()
     val cigarSearcher = new LetMeCigarFinderThatForYou(cigarName, location)
     cigarSearcher.loadSearchResults.onSuccess {
       case results => displayResults(results)
     }
   }
 
-  private def clearList = {
+  private var callbacks: Callbacks = DummyCallbacks
+  implicit lazy val context = getActivity
+  private lazy val adapter = new SearchResultsAdapter
+
+  private def clearList() = {
     setListAdapter(null)
     setListShown(false)
   }

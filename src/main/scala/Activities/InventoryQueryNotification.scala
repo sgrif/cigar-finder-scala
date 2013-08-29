@@ -1,10 +1,11 @@
 package com.seantheprogrammer.cigar_finder_android
 
-import android.content.{Intent, Context}
+import android.content.Context
 import android.support.v4.app.NotificationCompat
-import android.app.{NotificationManager, Notification, PendingIntent}
+import android.app.{Notification, PendingIntent}
 import android.os.Parcelable
-import org.scaloid.common.SIntent
+import org.scaloid.common._
+import ActivityHelpers._
 
 class InventoryQueryNotification(result: SearchResult)
 (implicit context: Context) {
@@ -44,12 +45,9 @@ class InventoryQueryNotification(result: SearchResult)
       case None => // Do nothing
     }
 
-    PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+    ActivityHelpers.pendingActivity(intent, PendingIntent.FLAG_UPDATE_CURRENT)
   }
 
   private lazy val title = result.storeName
   private lazy val body = "Does %s carry %s?".format(result.storeName, result.cigar)
-  private lazy val notificationManager = {
-    context.getSystemService(Context.NOTIFICATION_SERVICE).asInstanceOf[NotificationManager]
-  }
 }

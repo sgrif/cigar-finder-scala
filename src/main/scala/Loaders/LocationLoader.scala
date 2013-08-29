@@ -5,9 +5,11 @@ import android.content.Context
 import android.os.Bundle
 import android.location._
 import java.io.IOException
+import org.scaloid.common.SystemService
 
-class LocationLoader(context: Context, callback: Option[Location] => Any) extends SimpleLocationManager {
-  lazy val locationManager = context.getSystemService(Context.LOCATION_SERVICE).asInstanceOf[LocationManager]
+class LocationLoader(callback: Option[Location] => Any)(implicit context: Context)
+extends SimpleLocationManager
+with SystemService {
   val worstAccuracy = 1000
   val oldestTime = AlarmManager.INTERVAL_FIFTEEN_MINUTES
 

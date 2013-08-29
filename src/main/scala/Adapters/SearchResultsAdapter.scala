@@ -1,10 +1,13 @@
 package com.seantheprogrammer.cigar_finder_android
 
 import android.content.Context
-import android.view.{LayoutInflater, View, ViewGroup}
+import android.view.{View, ViewGroup}
 import android.widget.BaseAdapter
+import org.scaloid.common.SystemService
 
-class CigarSearchResultsAdapter(context: Context) extends BaseAdapter {
+class SearchResultsAdapter(implicit context: Context)
+extends BaseAdapter
+with SystemService {
   private var _results: SearchResults = new SearchResults(IndexedSeq.empty)
   var listItems: IndexedSeq[ListItem[_]] = IndexedSeq.empty
 
@@ -49,5 +52,5 @@ class CigarSearchResultsAdapter(context: Context) extends BaseAdapter {
 
   private def newView(index: Int, parent: ViewGroup) = layoutInflater.inflate(listItems(index).layoutId, parent, false)
 
-  lazy val layoutInflater = LayoutInflater.from(context)
+  lazy val layoutInflater = super.layoutInflater
 }
