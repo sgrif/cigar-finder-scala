@@ -3,8 +3,9 @@ package com.seantheprogrammer.cigar_finder_android
 import android.app.Service
 import android.content.Intent
 import android.location.Location
+import org.scaloid.common.SService
 
-class Concierge extends Service {
+class Concierge extends SService {
   override def onBind(intent: Intent) = null
 
   override def onStartCommand(intent: Intent, flags: Int, id: Int) = {
@@ -26,7 +27,7 @@ class Concierge extends Service {
     }
   }
 
-  private def onStoresLoaded(stores: IndexedSeq[Store]) = new Geofencer(this, stores).updateAlerts
+  private def onStoresLoaded(stores: IndexedSeq[Store]) = new Geofencer(stores).updateAlerts
 
   private def shouldUpdateForLocation(location: Location) = {
     val largeEnoughDistance: Boolean = Concierge.lastUpdatedLocation match {

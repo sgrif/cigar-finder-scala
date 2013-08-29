@@ -19,41 +19,34 @@ class InventoryQuery(locationClient: IntentLocationClient)
   }
 
   private def lookupInventory = {
-    if (locationClient.isEntering) createNotifications
+    if (locationClient.isEntering) confirmLocation
     else if (locationClient.isExiting) cancelNotifications
   }
 
-  private def createNotifications = {
+  private def confirmLocation = {
     if (enoughTimePassed) {
-      locationClient.geofences.foreach(createNotification)
+      val storeIds = locationClient.geofences.map(_.getRequestId)
+      queryData.currentStoreIds = storeIds.toSet
+      new LocationConfirmation().createNotificationIfConfirmed
     }
   }
 
   private def cancelNotifications = {
-    locationClient.geofences.foreach(cancelNotification)
-  }
-
-  private def createNotification(geofence: Geofence) = {
-    val result = new MissingInformationLoader(geofence.getRequestId).result
-    new InventoryQueryNotification(result).build
-    prefs.lastNotification = System.currentTimeMillis
-  }
-
-  private def cancelNotification(geofence: Geofence) = {
     new InventoryQueryNotification(null).cancel
+    new LocationConfirmation().cancel
   }
+
+  // private def createNotification(geofence: Geofence) = {
+  //   val result = new MissingInformationLoader(geofence.getRequestId).result
+  //   new InventoryQueryNotification(result).build
+  //   prefs.lastNotification = System.currentTimeMillis
+  // }
 
   private def enoughTimePassed = {
-    timeSinceNotification > AlarmManager.INTERVAL_HOUR &&
-    timeSinceInformationReceived > AlarmManager.INTERVAL_DAY
+    queryData.timeSinceNotification > AlarmManager.INTERVAL_HOUR &&
+    queryData.timeSinceInformationReceived > AlarmManager.INTERVAL_DAY
     true
   }
 
-  private def timeSinceNotification =
-    System.currentTimeMillis - prefs.lastNotification(0L)
-
-  private def timeSinceInformationReceived =
-    System.currentTimeMillis - prefs.lastInformationReceived(0L)
-
-  private lazy val prefs = Preferences()
+  private lazy val queryData = new InventoryQueryData
 }

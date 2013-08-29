@@ -7,7 +7,7 @@ import com.google.android.gms.location.{LocationStatusCodes, Geofence, LocationC
 import com.google.android.gms.common.{ConnectionResult, GooglePlayServicesClient}
 import scala.collection.JavaConversions._
 
-class Geofencer(context: Context, stores: IndexedSeq[Store]) {
+class Geofencer(stores: IndexedSeq[Store])(implicit context: Context) {
   private def inProgress = _locationClient.isEmpty
   private val geofenceRadius = 100
 
