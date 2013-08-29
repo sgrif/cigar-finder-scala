@@ -5,17 +5,15 @@ name := "CigarFinder"
 
 keyalias := "release"
 
-version := "1.1.0"
+version := "1.1.1"
 
-versionCode := 6
+versionCode := 7
 
 scalaVersion := "2.10.2"
 
 scalacOptions ++= Seq("-feature", "-deprecation")
 
 platformName := "android-17"
-
-libraryDependencies += "org.scalatest" %% "scalatest" % "1.9.1" % "test"
 
 libraryDependencies += "com.android.support" % "support-v4" % "18.0.0"
 
