@@ -10,6 +10,8 @@ class SearchResults(results: IndexedSeq[SearchResult]) extends Parcelable with T
   def noInformation = results.filter { !_.hasInformation }
 
   def size = results.size
+  def isEmpty = results.isEmpty
+
   def indexOf(result: SearchResult) = sorted.indexOf(result)
   def indexForId(id: Int) = sorted.indexWhere(_.store.id == id)
 
