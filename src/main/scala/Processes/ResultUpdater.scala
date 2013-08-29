@@ -4,7 +4,7 @@ import android.os.AsyncTask
 import com.loopj.android.http._
 
 class ResultUpdater(result: SearchResult) {
-  def execute = updateApi(result.isCarried match {
+  def execute() = updateApi(result.isCarried match {
     case true => "report_carried"
     case false => "report_not_carried"
   })

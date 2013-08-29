@@ -41,6 +41,7 @@
       />
     <activity android:name=".SearchResultsActivity" />
     <activity android:name=".SearchResultsDetailActivity" />
+    <activity android:name=".InventoryQueryActivity" />
 
     <receiver android:name=".WhiteVan" />
 

@@ -4,7 +4,7 @@ import com.seantheprogrammer.cigar_finder_android.SearchResultsParser
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest._
 
-class CigarSearchResultsParserSpecs extends Spec with ShouldMatchers {
+class SearchResultsParserSpecs extends Spec with ShouldMatchers {
   describe("results") {
     it("parses an array of results") {
       val json = """

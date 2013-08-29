@@ -15,6 +15,8 @@ scalacOptions ++= Seq("-feature", "-deprecation")
 
 platformName := "android-17"
 
+libraryDependencies += "org.scalatest" %% "scalatest" % "1.9.1" % "test"
+
 libraryDependencies += "com.android.support" % "support-v4" % "18.0.0"
 
 libraryDependencies += aarlib("com.google.android.gms" % "play-services" % "3.1.36")
