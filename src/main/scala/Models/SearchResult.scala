@@ -4,7 +4,7 @@ import android.os.{Parcelable, Parcel}
 import java.text.SimpleDateFormat;
 import java.util.{Date, TimeZone};
 
-case class SearchResult(cigar: String, store: Store, carried: Option[Boolean], updatedAt: String)
+case class SearchResult(cigar: String = "", store: Store = Store(), carried: Option[Boolean] = None, updatedAt: String = "")
 extends Parcelable with TypedParceling {
   def isCarried = carried match {
     case Some(carried) => carried

@@ -14,7 +14,7 @@ class InventoryQueryData(implicit context: Context) {
     prefs.lastInformationReceived = now
   }
 
-  def currentStoreIds = prefs.currentStoreIds(Set.empty)
+  def currentStoreIds: Set[String] = prefs.currentStoreIds(Set.empty)
   def currentStoreIds_=(storeIds: Set[String]) {
     prefs.currentStoreIds = storeIds
   }

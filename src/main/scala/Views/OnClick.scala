@@ -2,6 +2,7 @@ package com.seantheprogrammer.cigar_finder_android
 
 import android.view.View
 import android.view.View.OnClickListener
+import scala.language.implicitConversions
 
 class ViewWithOnClick(view: View) {
   def onClick(callback: => Unit) = {

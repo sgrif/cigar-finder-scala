@@ -15,11 +15,21 @@ scalacOptions ++= Seq("-feature", "-deprecation")
 
 platformName := "android-17"
 
+resolvers += "spray" at "http://repo.spray.io/"
+
+libraryDependencies += "org.scalatest" %% "scalatest" % "1.9.1" % "test"
+
+libraryDependencies += "org.robolectric" % "robolectric" % "2.1.1" % "test"
+
+libraryDependencies += "junit" % "junit" % "4.11" % "test"
+
 libraryDependencies += "com.android.support" % "support-v4" % "18.0.0"
 
 libraryDependencies += aarlib("com.google.android.gms" % "play-services" % "3.1.36")
 
 libraryDependencies += "org.scaloid" %% "scaloid" % "2.3-8"
+
+libraryDependencies += "io.spray" %%  "spray-json" % "1.2.5"
 
 libraryDependencies += "com.loopj.android" % "image" % "1.0.0" from "http://cloud.github.com/downloads/loopj/android-smart-image-view/android-smart-image-view-1.0.0.jar"
 

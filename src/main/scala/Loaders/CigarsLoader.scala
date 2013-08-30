@@ -4,13 +4,13 @@ import scala.io.Source
 import scala.concurrent.future
 import scala.concurrent.ExecutionContext.Implicits.global
 
-import org.json.JSONArray
+import spray.json._
+import DefaultJsonProtocol._
 
 class CigarsLoader {
   def loadCigars = future {
     val content = Source.fromURL(cigarsUrl)
-    val json = new JSONArray(content.mkString)
-    0 until json.length map(json.getString(_))
+    content.mkString.asJson.convertTo[IndexedSeq[String]]
   }
 
   private lazy val cigarsUrl = CigarFinder.baseUrl + "cigars.json"

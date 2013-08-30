@@ -9,7 +9,7 @@ import scala.io.Source
 class LetMeCigarFinderThatForYou(cigarName: String, location: Location) {
   def loadSearchResults = future {
     val content = Source.fromURL(apiUrl)
-    val parser = new SearchResultsParser(content.mkString)
+    val parser = new SearchResultListParser(content.mkString)
     new SearchResults(parser.results)
   }
 

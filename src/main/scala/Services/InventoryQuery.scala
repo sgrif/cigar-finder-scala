@@ -36,12 +36,6 @@ class InventoryQuery(locationClient: IntentLocationClient)
     new LocationConfirmation().cancel
   }
 
-  // private def createNotification(geofence: Geofence) = {
-  //   val result = new MissingInformationLoader(geofence.getRequestId).result
-  //   new InventoryQueryNotification(result).build
-  //   prefs.lastNotification = System.currentTimeMillis
-  // }
-
   private def enoughTimePassed = {
     queryData.timeSinceNotification > AlarmManager.INTERVAL_HOUR &&
     queryData.timeSinceInformationReceived > AlarmManager.INTERVAL_DAY

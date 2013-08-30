@@ -36,14 +36,11 @@ class InventoryQueryNotification(result: SearchResult)
 
   private def createIntent: PendingIntent = createIntent(None)
   private def createIntent(action: String): PendingIntent = createIntent(Some(action))
-  private def createIntent(action: Option[String]) = {
+  private def createIntent(maybeAction: Option[String]) = {
     val intent = SIntent[InventoryQueryActivity]
     intent.putExtra("searchResult", result.asInstanceOf[Parcelable])
 
-    action match {
-      case Some(action) => intent.setAction(action)
-      case None => // Do nothing
-    }
+    for (action <- maybeAction) intent.setAction(action)
 
     ActivityHelpers.pendingActivity(intent, PendingIntent.FLAG_UPDATE_CURRENT)
   }

@@ -3,12 +3,12 @@ package com.seantheprogrammer.cigar_finder_android
 import android.os.{Parcel, Parcelable}
 
 case class Store(
-  id: Int,
-  name: String,
-  latitude: Double,
-  longitude: Double,
-  address: String,
-  phoneNumber: String
+  id: Int = -1,
+  name: String = "",
+  latitude: Double = 0,
+  longitude: Double = 0,
+  address: String = "",
+  phoneNumber: Option[String] = None
 ) extends Parcelable with TypedParceling {
   def location = new ConstructedLocation(latitude, longitude)
 
