@@ -19,5 +19,5 @@ class PlayServices(context: Context) {
 }
 
 object PlayServices {
-  val enablePlayServices = 1
+  val enablePlayServices = 9000
 }
