@@ -6,14 +6,15 @@ import org.robolectric.Robolectric._
 import org.junit.{Test, Before}
 import org.robolectric.annotation.Config
 import org.scalatest.junit.ShouldMatchersForJUnit
+import org.robolectric.util.ActivityController
 
 @RunWith(classOf[RobolectricTestRunner]) @Config(manifest="src/main/AndroidManifest.xml")
 class SearchFormActivitySpecs extends ShouldMatchersForJUnit {
-  var activity: SearchFormActivity = _
+  var controller: ActivityController[SearchFormActivity] = _
 
   @Before def setUp {
-    activity = new SearchFormActivity
-    shadowOf(activity).callOnCreate(null)
+    controller = buildActivity(classOf[SearchFormActivity])
+    controller.create()
   }
 
   @Test def itSendsCigarAndLocationToSearchResults {
@@ -40,6 +41,14 @@ class SearchFormActivitySpecs extends ShouldMatchersForJUnit {
     logo should be (null)
   }
 
+  @Test @Config(qualifiers="en-large-land")
+  def itShowsLogoInLandscapeOnTablets {
+    val logo = activity.findView(TR.logo)
+
+    logo should not be (null)
+  }
+
+  def activity = controller.get
   def shadow = shadowOf(activity)
   def cigarInput = activity.findView(TR.inputCigarName)
   def locationInput = activity.findView(TR.inputLocationName)

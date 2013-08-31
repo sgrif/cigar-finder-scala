@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:paddingLeft="24dp"
+  android:paddingRight="24dp"
+  >
+
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    />
+  <ImageView
+    android:layout_width="match_parent"
+    android:layout_height="172dp"
+    android:id="@+id/logo"
+    android:src="@drawable/ic_logo_home"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginBottom="48dp"
+    android:scaleType="fitCenter"
+    android:contentDescription="Cigar Finder"
+    />
+
+  <LinearLayout
+    android:layout_width="400dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center_horizontal"
+    >
+    <include layout="@layout/cigar_search_form"/>
+  </LinearLayout>
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    />
+</LinearLayout>
