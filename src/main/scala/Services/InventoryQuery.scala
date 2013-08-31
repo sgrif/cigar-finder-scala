@@ -39,7 +39,6 @@ class InventoryQuery(locationClient: IntentLocationClient)
   private def enoughTimePassed = {
     queryData.timeSinceNotification > AlarmManager.INTERVAL_HOUR &&
     queryData.timeSinceInformationReceived > AlarmManager.INTERVAL_DAY
-    true
   }
 
   private lazy val queryData = new InventoryQueryData
