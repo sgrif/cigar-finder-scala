@@ -13,7 +13,7 @@ class SearchFormActivitySpecs extends ShouldMatchersForJUnit {
 
   @Before def setUp {
     activity = new SearchFormActivity
-    activity.onCreate(null)
+    shadowOf(activity).callOnCreate(null)
   }
 
   @Test def itSendsCigarAndLocationToSearchResults {

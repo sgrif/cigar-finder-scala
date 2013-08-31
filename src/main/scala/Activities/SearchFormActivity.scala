@@ -7,9 +7,7 @@ import android.os.Bundle
 
 class SearchFormActivity extends SActivity
 with TypedActivity {
-  override def onCreate(savedInstanceState: Bundle) {
-    super.onCreate(savedInstanceState)
-
+  onCreate {
     setContentView(R.layout.activity_cigar_search_form)
     new CigarsLoader().loadCigars.onSuccess { case cigars => setCigarAutocomplete(cigars) }
     findView(TR.searchSubmit).onClick(performSearch())
