@@ -1,10 +1,11 @@
 package com.seantheprogrammer.cigar_finder_android
 
-import android.app.{DialogFragment, Activity}
+import android.app.DialogFragment
 import android.os.Bundle
 import android.content.Intent
+import org.scaloid.common.SActivity
 
-class MainActivity extends Activity {
+class MainActivity extends SActivity {
   override def onCreate(b: Bundle) = {
     super.onCreate(b)
     checkPlayServicesAvailability()
@@ -16,6 +17,7 @@ class MainActivity extends Activity {
   }
 
   private def startPrimaryActivity() = {
+    saveAppWasRun()
     beginLocationUpdates()
     val intent = new Intent(this, classOf[SearchFormActivity])
     startActivity(intent)
@@ -28,7 +30,13 @@ class MainActivity extends Activity {
     dialogFragment.show(getFragmentManager, "Play Services")
   }
 
-  private def beginLocationUpdates() = new Surveillance(this).beginTracking
+  private def saveAppWasRun() {
+    Prefs().appWasRun = true
+  }
+
+  private def beginLocationUpdates() {
+    new Surveillance().beginTracking()
+  }
 
   private lazy val playServices = new PlayServices(this)
 }

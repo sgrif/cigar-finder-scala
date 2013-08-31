@@ -4,10 +4,10 @@ import android.app.PendingIntent
 import android.content.{BroadcastReceiver, Context, Intent}
 import android.location.{LocationManager, Location}
 
-class Surveillance(context: Context) {
+class Surveillance(implicit context: Context) {
   lazy val locationManager = context.getSystemService(Context.LOCATION_SERVICE).asInstanceOf[LocationManager]
 
-  def beginTracking = {
+  def beginTracking() {
     val intent = new Intent(context, classOf[WhiteVan])
     val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
     locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 0, 0, pendingIntent)

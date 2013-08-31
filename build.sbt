@@ -27,7 +27,7 @@ libraryDependencies += "org.robolectric" % "robolectric" % "2.1.1" % "test"
 
 libraryDependencies += "com.android.support" % "support-v4" % "18.0.0"
 
-libraryDependencies += aarlib("com.google.android.gms" % "play-services" % "3.1.36")
+libraryDependencies += aarlib("com.google.android.gms" % "play-services" % "3.2.25")
 
 libraryDependencies += "org.scaloid" %% "scaloid" % "2.3-8"
 
@@ -45,8 +45,4 @@ proguardOptions += "-keep class com.loopj.android.image.**"
 
 proguardOptions += "-keep class com.loopj.android.http.**"
 
-proguardOptions += """
--keep class * extends java.util.ListResourceBundle {
-  protected java.lang.Object[][] getContents();
-}
-"""
+proguardOptions += "-keep class * extends java.util.ListResourceBundle { protected java.lang.Object[][] getContents(); }"
