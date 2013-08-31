@@ -3,16 +3,19 @@ package com.seantheprogrammer.cigar_finder_android
 import org.scaloid.common._
 import android.content.Intent
 import scala.concurrent.ExecutionContext.Implicits.global
+import android.os.Bundle
 
 class SearchFormActivity extends SActivity
 with TypedActivity {
-  onCreate {
+  override def onCreate(savedInstanceState: Bundle) {
+    super.onCreate(savedInstanceState)
+
     setContentView(R.layout.activity_cigar_search_form)
     new CigarsLoader().loadCigars.onSuccess { case cigars => setCigarAutocomplete(cigars) }
-    findView(TR.searchSubmit).onClick(performSearch)
+    findView(TR.searchSubmit).onClick(performSearch())
   }
 
-  def performSearch = {
+  def performSearch() {
     val cigarName = findView(TR.inputCigarName).getText.toString.trim
     val locationName = findView(TR.inputLocationName).getText.toString.trim
 
