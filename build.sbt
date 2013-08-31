@@ -19,9 +19,7 @@ resolvers += "spray" at "http://repo.spray.io/"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "1.9.1" % "test"
 
-libraryDependencies += "org.robolectric" % "robolectric" % "2.1.1" % "test"
-
-libraryDependencies += "junit" % "junit" % "4.11" % "test"
+libraryDependencies += "org.mockito" % "mockito-all" % "1.9.5" % "test"
 
 libraryDependencies += "com.android.support" % "support-v4" % "18.0.0"
 
