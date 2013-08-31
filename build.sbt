@@ -7,7 +7,7 @@ keyalias := "release"
 
 version := "1.1.1"
 
-versionCode := 8
+versionCode := 9
 
 scalaVersion := "2.10.2"
 
