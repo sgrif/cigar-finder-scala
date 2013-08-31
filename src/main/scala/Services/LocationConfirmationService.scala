@@ -5,7 +5,8 @@ import android.content.Intent
 import com.google.android.gms.location.{DetectedActivity, ActivityRecognitionResult}
 import org.scaloid.common.SContext
 
-class LocationConfirmationService extends IntentService("LocationConfirmationService") with SContext {
+class LocationConfirmationService extends IntentService("LocationConfirmationService")
+with SContext {
   import DetectedActivity._
 
   override def onHandleIntent(intent: Intent) {
@@ -35,6 +36,7 @@ class LocationConfirmationService extends IntentService("LocationConfirmationSer
      val result = new MissingInformationLoader(id).result
      new InventoryQueryNotification(result).build
      data.notificationSent()
+     new LocationConfirmation().cancel()
   }
 
   private lazy val data = new InventoryQueryData
