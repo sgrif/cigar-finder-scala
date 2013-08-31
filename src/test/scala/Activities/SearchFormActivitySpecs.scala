@@ -33,6 +33,13 @@ class SearchFormActivitySpecs extends ShouldMatchersForJUnit {
     intent should be (null)
   }
 
+  @Test @Config(qualifiers="en-land")
+  def itDoesNotShowTheLogoInLandscapeMode {
+    val logo = activity.findView(TR.logo)
+
+    logo should be (null)
+  }
+
   def shadow = shadowOf(activity)
   def cigarInput = activity.findView(TR.inputCigarName)
   def locationInput = activity.findView(TR.inputLocationName)
