@@ -2,14 +2,15 @@ package com.seantheprogrammer.cigar_finder_android
 
 import android.location.Location
 import android.net.Uri
-import scala.concurrent.future
+import scala.concurrent._
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.io.Source
 
 class LetMeCigarFinderThatForYou(cigarName: String, location: Location) {
-  def loadSearchResults = future {
-    val content = Source.fromURL(apiUrl)
-    val parser = new SearchResultListParser(content.mkString)
+  def loadSearchResults: Future[SearchResults] = loadSearchResults(UrlSource)
+
+  def loadSearchResults(source: UrlSource) = future {
+    val content = source.fromURL(apiUrl)
+    val parser = new SearchResultListParser(content)
     new SearchResults(parser.results)
   }
 

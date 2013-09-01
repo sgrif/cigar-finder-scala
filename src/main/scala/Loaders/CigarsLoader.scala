@@ -1,6 +1,5 @@
 package com.seantheprogrammer.cigar_finder_android
 
-import scala.io.{BufferedSource, Source}
 import scala.concurrent.{Future, future}
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -16,12 +15,4 @@ class CigarsLoader {
   }
 
   private lazy val cigarsUrl = CigarFinder.baseUrl + "cigars.json"
-}
-
-trait UrlSource {
-  def fromURL(url: String): String
-}
-
-object UrlSource extends UrlSource {
-  override def fromURL(url: String) = Source.fromURL(url).mkString
 }

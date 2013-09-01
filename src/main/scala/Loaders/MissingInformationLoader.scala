@@ -1,10 +1,10 @@
 package com.seantheprogrammer.cigar_finder_android
 
-import scala.io.Source
-
 class MissingInformationLoader(id: String) {
-  def result = {
-    val json = Source.fromURL(url).mkString
+  def result: SearchResult = result(UrlSource)
+
+  def result(source: UrlSource) = {
+    val json = source.fromURL(url)
     new SearchResultParser(json).result
   }
 
