@@ -17,7 +17,7 @@ class InventoryQueryNotification(result: SearchResult)
       .setContentTitle(title)
       .setContentText(body)
       .setStyle(notificationStyle)
-      .setDefaults(Notification.DEFAULT_ALL)
+      // .setDefaults(Notification.DEFAULT_ALL)
       .setContentIntent(createIntent)
       .addAction(R.drawable.ic_action_tick,
         "Yes",
