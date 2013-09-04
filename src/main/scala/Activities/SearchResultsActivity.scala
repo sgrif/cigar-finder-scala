@@ -12,7 +12,7 @@ with SearchResultsFragment.Callbacks
 with BackNavigation[SearchFormActivity] {
   override def parentActivity = classOf[SearchFormActivity]
 
-  lazy val cigarName = getIntent.getStringExtra("cigarName").capitalize
+  lazy val cigarName = getIntent.getStringExtra("cigarName").trim.capitalize
   lazy val locationName = getIntent.getStringExtra("locationName")
   private var location: Option[Location] = None
 
